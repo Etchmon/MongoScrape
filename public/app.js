@@ -93,7 +93,7 @@ $(document).on("click", "#deletecomment", function () {
             $(".comments").empty();
         });
 
-    // Also, remove the values entered in the input and textarea for note entry
+
     $("#titleinput").val("");
     $("#bodyinput").val("");
 });

@@ -4,17 +4,13 @@ var logger = require("morgan");
 var mongoose = require("mongoose");
 var axios = require("axios");
 var cheerio = require("cheerio");
-// var mongojs = require("mongojs");
-// Require all models
+
 var db = require("./models");
-// var db = mongojs(databaseUrl, collections);
-// db.on("error", function (error) {
-//   console.log("Database Error:", error);
-// });
+;
 
 var PORT = 3000;
 
-// Initialize Express
+
 var app = express();
 
 // Configure middleware
@@ -36,27 +32,20 @@ app.get("/scrape", function (req, res) {
     // Make a request call to grab the HTML body from the site of your choice
     request("https://old.reddit.com/", function (error, response, html) {
 
-        // Load the HTML into cheerio and save it to a variable
-        // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
+
         var $ = cheerio.load(html);
 
-        // Select each element in the HTML body from which you want information.
-        // NOTE: Cheerio selectors function similarly to jQuery's selectors,
-        // but be sure to visit the package's npm page to see how it works
         $("a.title").each(function (i, element) {
 
             var link = $(element).attr("href");
             var title = $(element).text();
-            // var summ = $(element).children().class("mu-item__treasure");
 
-            // Save these results in an object that we'll push into the results array we defined earlier
             var result = {};
 
-            // Add the text and href of every link, and save them as properties of the result object
             result.title = $(this).text();
             result.link = $(this).attr("href");
 
-            // Create a new Article using the `result` object built from scraping
+
             db.Article.create(result)
                 .then(function (dbArticle) {
                     // View the added result in the console
@@ -73,7 +62,7 @@ app.get("/scrape", function (req, res) {
 });
 
 app.get("/articles", function (req, res) {
-    // TODO: Finish the route so it grabs all of the articles
+
     db.Article.find({})
         .populate("comment")
         .then(function (data) {
