@@ -31,7 +31,7 @@ var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/scraper";
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI);
 
-// mongoose.connect("mongodb://localhost:27017/scraper");
+mongoose.connect("mongodb://localhost:27017/scraper");
 
 app.get("/scrape", function (req, res) {
     var cheerio = require("cheerio");
